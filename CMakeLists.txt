@@ -8,15 +8,15 @@ set(GLFW_VERSION 3.3.9)
 set(GLM_VERSION 1.0.1)
 
 # Optionally use freetype if you want to render font 
-# set(FREETYPE_VERSION 2.13.2)
+set(FREETYPE_VERSION 2.13.2)
 # Non-needed features of freetype
-# option(FT_DISABLE_ZLIB ON)
-# option(FT_DISABLE_BZIP2 ON)
-# option(FT_DISABLE_PNG ON)
-# option(FT_DISABLE_HARFBUZZ ON)
-# option(FT_DISABLE_BROTLI ON)
-# option(FT_DISABLE_GZIP ON)
-# option(FT_DISABLE_LZMA ON)
+option(FT_DISABLE_ZLIB ON)
+option(FT_DISABLE_BZIP2 ON)
+option(FT_DISABLE_PNG ON)
+option(FT_DISABLE_HARFBUZZ ON)
+option(FT_DISABLE_BROTLI ON)
+option(FT_DISABLE_GZIP ON)
+option(FT_DISABLE_LZMA ON)
 
 # Do not build other non-important things
 option(GLFW_BUILD_DOCS ON)
@@ -44,12 +44,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glm)
 
 # Fetch Freetype
-# FetchContent_Declare(
-#     freetype
-#     URL https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.xz
-#     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-# )
-# FetchContent_MakeAvailable(freetype)
+FetchContent_Declare(
+    freetype
+    URL https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.xz
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(freetype)
 
 # Fetch GLAD
 FetchContent_Declare(
@@ -58,7 +58,7 @@ FetchContent_Declare(
     GIT_TAG c
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
-FetchContent_Populate(glad)
+FetchContent_MakeAvailable(glad)
 
 # Include GLAD
 include_directories(${glad_SOURCE_DIR}/include)
