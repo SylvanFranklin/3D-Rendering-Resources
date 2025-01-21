@@ -1,3 +1,13 @@
-# A collection of mini projects related to 3d rendering
+# Basic 3d Template
 
-Each branch is a different lil project, and the main one has a template to start from along with some basic docs, at least it will once we right them!
+Clone from this branch
+
+```sh
+git clone -b 3d-template https://github.com/SylvanFranklin/3D-Rendering-Resources 3d-template
+```
+
+With a custom name
+
+```sh
+git clone -b 3d-template https://github.com/SylvanFranklin/3D-Rendering-Resources custom-name
+```
