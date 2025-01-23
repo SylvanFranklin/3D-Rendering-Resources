@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_ENGINE_H
 #define GRAPHICS_ENGINE_H
 
+#include "shader/ShaderManager.h"
 #include "util/camera.h"
 #include "util/inputHandler.h"
 #include <GLFW/glfw3.h>
@@ -9,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-using std::vector, std::unique_ptr, std::make_unique, glm::mat4;
+using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho;
 
 class Engine {
   private:
@@ -33,6 +34,13 @@ class Engine {
   public:
 	Engine();
 	~Engine();
+
+    unique_ptr<ShaderManager> shaderManager;
+    Shader shapeShader;
+
+    const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
+                                  static_cast<float>(height), -1.0f, 1.0f);
+
 	unsigned int initWindow(bool debug = false);
 	void initShaders();
 	void initShapes();

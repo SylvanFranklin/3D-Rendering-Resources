@@ -36,7 +36,7 @@ unsigned int Engine::initWindow(bool debug) {
 
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables the cursor
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		cout << "Failed to initialize GLAD" << endl;
@@ -52,8 +52,22 @@ unsigned int Engine::initWindow(bool debug) {
 	return 0;
 }
 
-void Engine::initShaders() {}
-void Engine::initShapes() {}
+void Engine::initShaders() {
+    // load shader manager
+    shaderManager = make_unique<ShaderManager>();
+
+    // Load shader into shader manager and retrieve it
+    shapeShader = this->shaderManager->loadShader("../res/shader/shape.vert",
+                                                  "../res/shader/shape.frag",
+                                                  nullptr, "shape");
+
+    // Set uniforms that never change
+    shapeShader.use();
+    shapeShader.setMatrix4("projection", this->PROJECTION);
+}
+void Engine::initShapes() {
+
+}
 void Engine::initMatrices() {
 	view = camera->GetViewMatrix();
 	projection = camera->GetProjectionMatrix(width, height);
@@ -61,7 +75,7 @@ void Engine::initMatrices() {
 }
 
 void Engine::update() {
-	glClearColor(78.0 / 255.0, 116.0 / 255.0, 140.0 / 255.0, 1.0f);
+	glClearColor(255.0, 255.0, 255.0, 1.0f);
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
@@ -70,7 +84,8 @@ void Engine::update() {
 void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	view = camera->GetViewMatrix();
-	glfwSwapBuffers(window);
+
+    glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }
