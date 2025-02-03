@@ -2,14 +2,14 @@
 
 int main(int argc, char *argv[]) {
 
-  Engine engine;
+	Engine engine;
 
-  while (!engine.shouldClose()) {
-    engine.processInput();
-    engine.update();
-    engine.render();
-  }
+	while (!engine.shouldClose()) {
+		engine.processInput();
+		engine.update();
+		engine.render();
+	}
 
-  glfwTerminate();
-  return 0;
+	glfwTerminate();
+	return 0;
 }

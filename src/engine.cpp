@@ -36,7 +36,8 @@ unsigned int Engine::initWindow(bool debug) {
 
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables the cursor
+	//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables
+	//the cursor
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		cout << "Failed to initialize GLAD" << endl;
@@ -53,21 +54,19 @@ unsigned int Engine::initWindow(bool debug) {
 }
 
 void Engine::initShaders() {
-    // load shader manager
-    shaderManager = make_unique<ShaderManager>();
+	// load shader manager
+	shaderManager = make_unique<ShaderManager>();
 
-    // Load shader into shader manager and retrieve it
-    shapeShader = this->shaderManager->loadShader("../res/shader/shape.vert",
-                                                  "../res/shader/shape.frag",
-                                                  nullptr, "shape");
+	// Load shader into shader manager and retrieve it
+	shapeShader = this->shaderManager->loadShader("../res/shader/shape.vert",
+												  "../res/shader/shape.frag",
+												  nullptr, "shape");
 
-    // Set uniforms that never change
-    shapeShader.use();
-    shapeShader.setMatrix4("projection", this->PROJECTION);
+	// Set uniforms that never change
+	shapeShader.use();
+	shapeShader.setMatrix4("projection", this->PROJECTION);
 }
-void Engine::initShapes() {
-
-}
+void Engine::initShapes() {}
 void Engine::initMatrices() {
 	view = camera->GetViewMatrix();
 	projection = camera->GetProjectionMatrix(width, height);
@@ -85,7 +84,7 @@ void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	view = camera->GetViewMatrix();
 
-    glfwSwapBuffers(window);
+	glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }
