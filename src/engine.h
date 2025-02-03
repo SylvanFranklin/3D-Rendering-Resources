@@ -35,11 +35,11 @@ class Engine {
 	Engine();
 	~Engine();
 
-    unique_ptr<ShaderManager> shaderManager;
-    Shader shapeShader;
+	unique_ptr<ShaderManager> shaderManager;
+	Shader shapeShader;
 
-    const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
-                                  static_cast<float>(height), -1.0f, 1.0f);
+	const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
+								  static_cast<float>(height), -1.0f, 1.0f);
 
 	unsigned int initWindow(bool debug = false);
 	void initShaders();
