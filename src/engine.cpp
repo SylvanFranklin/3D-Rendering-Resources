@@ -65,8 +65,8 @@ void Engine::initShaders() {
 
 void Engine::initScene() {
 	this->scene = Scene();
-	scene.initVBO();
 	scene.initVAO();
+	scene.initVBO();
 }
 
 void Engine::draw() {
@@ -81,17 +81,16 @@ void Engine::initMatrices() {
 }
 
 void Engine::update() {
-	glClearColor(255.0, 255.0, 255.0, 1.0f);
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }
 
 void Engine::render() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	view = camera->GetViewMatrix();
-
-	glfwSwapBuffers(window);
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// view = camera->GetViewMatrix();
+	draw();
+	// glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }

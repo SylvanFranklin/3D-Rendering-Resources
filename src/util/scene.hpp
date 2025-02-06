@@ -13,9 +13,9 @@ class Scene {
 	static const float vertices[18];
 
   public:
-	Scene() = default; // Corrected constructor
+	Scene() = default; 
 	void initVBO();
-	void initVAO();
+	unsigned int initVAO();
 	void draw();
 };
 
