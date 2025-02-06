@@ -16,7 +16,7 @@ const float SENSITIVITY = 0.1f;
 const float PITCH_LIMIT = 89.0f;
 const float RENDER_DISTANCE = 300.0f;
 const glm::vec3 WORLD_UP = glm::vec3(0.0f, 1.0f, 0.0f);
-const glm::vec3 POSITION = glm::vec3(0.0f, 0.0f, 0.0f);
+const glm::vec3 POSITION = glm::vec3(0.0f, 0.0f, -4.0f);
 
 class Camera {
   public:

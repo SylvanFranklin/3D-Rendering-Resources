@@ -2,12 +2,16 @@
 
 Scene::Scene(){
     this->indices = {
-            0, 1, 2, // first triangle
+            0, 1, 2 // first triangle
     };
     this->vertices = {
-            1.0, 0.0, 0.0,
-            0.0, 0.0, 0.0,
-            0.0, 1000000.0, 0.0
+            -1.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0,
+
+            -1.0, 1.0, 0.0,
+            1.0, 1.0, 0.0,
+            1.0, -1.0, 0.0
 
     };
 }
@@ -28,7 +32,7 @@ void Scene::draw() {
     glBindVertexArray(this->VAO);
 //    glDrawArrays(GL_TRIANGLE_FAN, 0,
 //                 9);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
 //    glBindVertexArray(0);
 }
@@ -40,7 +44,7 @@ void Scene::setUniforms(const glm::mat4 &model, const glm::mat4 &view,
 
     // The size of the shape is scaled by the model matrix to make the shape
     // larger or smaller.
-    modelMatrix = glm::scale(modelMatrix, glm::vec3(1));
+//    modelMatrix = glm::scale(modelMatrix, glm::vec3(1));
     this->shader.setMatrix4("model", modelMatrix);
     this->shader.setMatrix4("view", view);
     this->shader.setMatrix4("projection", projection);
