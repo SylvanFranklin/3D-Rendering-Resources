@@ -10,9 +10,10 @@ Engine::Engine() {
 	this->camera = std::make_unique<Camera>();
 	this->input = std::make_unique<InputHandler>();
 	this->initWindow();
+    this->initMatrices();
 	this->initShaders();
 	this->initScene();
-	this->initMatrices();
+
 }
 
 unsigned int Engine::initWindow(bool debug) {
@@ -59,20 +60,24 @@ void Engine::initShaders() {
 	defaultShader = this->shaderManager->loadShader(
 		"../res/shaders/default.vert", "../res/shaders/default.frag", nullptr,
 		"default");
-	defaultShader.use();
-	// defaultShader.setMatrix4("projection", this->PROJECTION);
+//	defaultShader.use();
+//	 defaultShader.setMatrix4("projection", this->PROJECTION);
 }
 
 void Engine::initScene() {
 	this->scene = Scene();
+    scene.setShader(defaultShader);
 	scene.initVAO();
 	scene.initVBO();
+
+//    scene.initEBO();
 }
 
-void Engine::draw() {
-	defaultShader.use();
-	scene.draw();
-}
+//void Engine::draw() {
+//	defaultShader.use();
+//	scene.draw();
+//    glfwSwapBuffers(window);
+//}
 
 void Engine::initMatrices() {
 	view = camera->GetViewMatrix();
@@ -87,10 +92,14 @@ void Engine::update() {
 }
 
 void Engine::render() {
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// view = camera->GetViewMatrix();
-	draw();
-	// glfwSwapBuffers(window);
+	 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+//	 view = camera->GetViewMatrix();
+
+     scene.setUniforms(modelLeft, view, projection);
+     defaultShader.use();
+     scene.draw();
+     glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }
