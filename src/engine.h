@@ -4,6 +4,7 @@
 #include "shader/ShaderManager.h"
 #include "util/camera.h"
 #include "util/inputHandler.h"
+#include "util/scene.hpp"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -34,18 +35,18 @@ class Engine {
   public:
 	Engine();
 	~Engine();
-
 	unique_ptr<ShaderManager> shaderManager;
-	Shader shapeShader;
-
+	Scene scene;
+	Shader defaultShader;
 	const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
 								  static_cast<float>(height), -1.0f, 1.0f);
 
 	unsigned int initWindow(bool debug = false);
 	void initShaders();
-	void initShapes();
+	void initScene();
 	void processInput();
 	void initMatrices();
+	void draw();
 	void update();
 	void render();
 	float deltaTime = 0.0f; // Time between current frame and last frame

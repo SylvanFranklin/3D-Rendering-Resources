@@ -1,5 +1,6 @@
 #include "engine.h"
 #include "util/inputHandler.h"
+#include "util/scene.hpp"
 #include <iostream>
 #include <memory>
 
@@ -10,7 +11,7 @@ Engine::Engine() {
 	this->input = std::make_unique<InputHandler>();
 	this->initWindow();
 	this->initShaders();
-	this->initShapes();
+	this->initScene();
 	this->initMatrices();
 }
 
@@ -37,7 +38,7 @@ unsigned int Engine::initWindow(bool debug) {
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables
-	//the cursor
+	// the cursor
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		cout << "Failed to initialize GLAD" << endl;
@@ -54,19 +55,25 @@ unsigned int Engine::initWindow(bool debug) {
 }
 
 void Engine::initShaders() {
-	// load shader manager
 	shaderManager = make_unique<ShaderManager>();
-
-	// Load shader into shader manager and retrieve it
-	shapeShader = this->shaderManager->loadShader("../res/shader/shape.vert",
-												  "../res/shader/shape.frag",
-												  nullptr, "shape");
-
-	// Set uniforms that never change
-	shapeShader.use();
-	shapeShader.setMatrix4("projection", this->PROJECTION);
+	defaultShader = this->shaderManager->loadShader(
+		"../res/shaders/default.vert", "../res/shaders/default.frag", nullptr,
+		"default");
+	defaultShader.use();
+	// defaultShader.setMatrix4("projection", this->PROJECTION);
 }
-void Engine::initShapes() {}
+
+void Engine::initScene() {
+	this->scene = Scene();
+	scene.initVAO();
+	scene.initVBO();
+}
+
+void Engine::draw() {
+	defaultShader.use();
+	scene.draw();
+}
+
 void Engine::initMatrices() {
 	view = camera->GetViewMatrix();
 	projection = camera->GetProjectionMatrix(width, height);
@@ -74,17 +81,16 @@ void Engine::initMatrices() {
 }
 
 void Engine::update() {
-	glClearColor(255.0, 255.0, 255.0, 1.0f);
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }
 
 void Engine::render() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	view = camera->GetViewMatrix();
-
-	glfwSwapBuffers(window);
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// view = camera->GetViewMatrix();
+	draw();
+	// glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }

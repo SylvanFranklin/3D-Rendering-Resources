@@ -7,34 +7,15 @@
 #include <iostream>
 using std::string, std::ifstream, std::stringstream, std::cout, std::endl;
 
-/// @brief General purpose shader object.
-/// @details Compiles from file, generates compile/link-time error messages and
-/// hosts several utility functions for easy management.
 class Shader {
   public:
-	/// @brief The shader program ID
 	unsigned int ID;
-
-	/// @brief Construct a new Shader object
 	Shader() {}
-
-	/// @brief Inform OpenGL to use this shader
-	/// @return A pointer to this shader object (for method chaining)
 	Shader &use();
-
-	/// @brief Compile the shader from given source code
-	/// @details Creates, compiles and links the shader
-	/// @note geometry source code is optional
-	/// @param vertexSource the source code for the vertex shader
-	/// @param fragmentSource the source code for the fragment shader
-	/// @param geometrySource the source code for the geometry shader (optional)
+	// compiles and links the shaders up
 	void compile(const char *vertexSource, const char *fragmentSource,
 				 const char *geometrySource =
 					 nullptr); // note: geometry source code is optional
-
-	// ------------------------------------------------------------------------
-	// utility functions
-	// ------------------------------------------------------------------------
 
 	/// @brief set a uniform float in the shader
 	/// @param name name of the uniform

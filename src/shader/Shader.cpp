@@ -8,7 +8,6 @@ Shader &Shader::use() {
 void Shader::compile(const char *vertexSource, const char *fragmentSource,
 					 const char *geometrySource) {
 	unsigned int sVertex, sFragment, gShader;
-
 	// vertex Shader
 	sVertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(sVertex, 1, &vertexSource, NULL);
@@ -20,8 +19,6 @@ void Shader::compile(const char *vertexSource, const char *fragmentSource,
 	glShaderSource(sFragment, 1, &fragmentSource, NULL);
 	glCompileShader(sFragment);
 	checkCompileErrors(sFragment, "FRAGMENT");
-
-	// if geometry shader source code is given, also compile geometry shader
 	if (geometrySource != nullptr) {
 		gShader = glCreateShader(GL_GEOMETRY_SHADER);
 		glShaderSource(gShader, 1, &geometrySource, NULL);
@@ -29,18 +26,13 @@ void Shader::compile(const char *vertexSource, const char *fragmentSource,
 		checkCompileErrors(gShader, "GEOMETRY");
 	}
 
-	// shader program
 	this->ID = glCreateProgram();
 	glAttachShader(this->ID, sVertex);
 	glAttachShader(this->ID, sFragment);
 	if (geometrySource != nullptr)
 		glAttachShader(this->ID, gShader);
-
 	glLinkProgram(this->ID);
 	checkCompileErrors(this->ID, "PROGRAM");
-
-	// delete the shader as they're linked into our program now and no longer
-	// necessary
 	glDeleteShader(sVertex);
 	glDeleteShader(sFragment);
 	if (geometrySource != nullptr)
@@ -95,8 +87,7 @@ void Shader::checkCompileErrors(unsigned int object, string type) {
 		glGetShaderiv(object, GL_COMPILE_STATUS, &success);
 		if (!success) {
 			glGetShaderInfoLog(object, 1024, NULL, infoLog);
-			cout << "| ERROR::SHADER: Compile-time error: Type: " << type
-				 << "\n"
+			cout << "ERROR::SHADER: Compile-time error: Type: " << type << "\n"
 				 << infoLog
 				 << "\n -- --------------------------------------------------- "
 					"-- "
@@ -108,7 +99,7 @@ void Shader::checkCompileErrors(unsigned int object, string type) {
 		glGetProgramiv(object, GL_LINK_STATUS, &success);
 		if (!success) {
 			glGetProgramInfoLog(object, 1024, NULL, infoLog);
-			cout << "| ERROR::Shader: Link-time error: Type: " << type << "\n"
+			cout << "ERROR::Shader: Link-time error: Type: " << type << "\n"
 				 << infoLog
 				 << "\n -- --------------------------------------------------- "
 					"-- "
