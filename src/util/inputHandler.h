@@ -41,11 +41,11 @@ class InputHandler {
 	bool key_pressed_released(int key) { return !keys[key] && last_keys[key]; }
 	float getMouseXOffset() { return MouseXOffset; }
 	float getMouseYOffset() { return MouseYOffset; }
+	float lastMouseX, lastMouseY, MouseXOffset, MouseYOffset;
 
   private:
 	bool keys[1024];
 	bool last_keys[1024];
-	double lastMouseX, lastMouseY, MouseXOffset, MouseYOffset;
 	bool firstMouse = true;
 };
 
