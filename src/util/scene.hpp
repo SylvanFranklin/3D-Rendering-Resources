@@ -26,8 +26,7 @@ class Scene {
 	//    void initEBO();
 	void draw();
 	void setUniforms(const glm::mat4 &model, const glm::mat4 &view,
-					 const glm::mat4 &projection,
-					 const glm::vec4 &mouseFactor) const;
+					 const glm::mat4 &projection) const;
 };
 
 #endif // SCENE_HPP

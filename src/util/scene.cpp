@@ -32,8 +32,7 @@ void Scene::draw() {
 }
 
 void Scene::setUniforms(const glm::mat4 &model, const glm::mat4 &view,
-						const glm::mat4 &projection,
-						const glm::vec4 &mouseFactor) const {
+						const glm::mat4 &projection) const {
 	glm::mat4 modelMatrix = model;
 	modelMatrix = translate(modelMatrix, glm::vec3(0.f, 0.f, 0.f));
 
@@ -43,8 +42,6 @@ void Scene::setUniforms(const glm::mat4 &model, const glm::mat4 &view,
 	this->shader.setMatrix4("model", modelMatrix);
 	this->shader.setMatrix4("view", view);
 	this->shader.setMatrix4("projection", projection);
-	this->shader.setVector4f("mouseFactor", mouseFactor);
-	this->shader.setVector3f("triangleColor", 1, 1, 1);
 }
 
 unsigned int Scene::initVAO() {

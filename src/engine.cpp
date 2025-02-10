@@ -93,9 +93,7 @@ void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	view = camera->GetViewMatrix();
-	scene.setUniforms(
-		modelLeft, view, projection,
-		glm::vec4(input->lastMouseX, input->lastMouseY, input->lastMouseX, 1.0));
+	scene.setUniforms(modelLeft, view, projection);
 	defaultShader.use();
 	scene.draw();
 	glfwSwapBuffers(window);
