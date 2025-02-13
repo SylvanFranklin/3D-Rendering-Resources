@@ -58,7 +58,7 @@ FetchContent_Declare(
     GIT_TAG c
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
-FetchContent_Populate(glad)
+FetchContent_MakeAvailable(glad)
 
 # Include GLAD
 include_directories(${glad_SOURCE_DIR}/include)
