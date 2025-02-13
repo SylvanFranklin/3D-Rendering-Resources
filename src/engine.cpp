@@ -1,5 +1,4 @@
 #include "engine.h"
-#include "util/inputHandler.h"
 #include <iostream>
 #include <memory>
 
@@ -37,7 +36,7 @@ unsigned int Engine::initWindow(bool debug) {
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables
-	//the cursor
+	// the cursor
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		cout << "Failed to initialize GLAD" << endl;
@@ -58,32 +57,36 @@ void Engine::initShaders() {
 	shaderManager = make_unique<ShaderManager>();
 
 	// Load shader into shader manager and retrieve it
-	shapeShader = this->shaderManager->loadShader("../res/shader/shape.vert",
-												  "../res/shader/shape.frag",
-												  nullptr, "shape");
-
+	defaultShader = this->shaderManager->loadShader(
+		"../res/shaders/default.vert", "../res/shaders/default.frag", nullptr,
+		"default");
 	// Set uniforms that never change
-	shapeShader.use();
-	shapeShader.setMatrix4("projection", this->PROJECTION);
+	defaultShader.use();
+	defaultShader.setMatrix4("model", this->model);
 }
-void Engine::initShapes() {}
+void Engine::initShapes() { cube = make_unique<Cube>(); }
 void Engine::initMatrices() {
+	model = mat4(1.0f);
 	view = camera->GetViewMatrix();
 	projection = camera->GetProjectionMatrix(width, height);
-	modelLeft = mat4(1.0f);
 }
 
 void Engine::update() {
 	glClearColor(255.0, 255.0, 255.0, 1.0f);
 	float currentFrame = glfwGetTime();
+	view = camera->GetViewMatrix();
+	projection = camera->GetProjectionMatrix(width, height);
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }
 
 void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	view = camera->GetViewMatrix();
-
+	defaultShader.use();
+	defaultShader.setMatrix4("model", model);
+	defaultShader.setMatrix4("view", view);
+	defaultShader.setMatrix4("projection", projection);
+	cube->draw();
 	glfwSwapBuffers(window);
 }
 

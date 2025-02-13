@@ -2,9 +2,6 @@
 
 out vec4 FragColor;
 
-uniform vec4 shapeColor;
-
-void main()
-{
-    FragColor = shapeColor;
+void main() {
+    FragColor = vec4(0.2f, 0.2f, 0.2f, 1.0f);
 }

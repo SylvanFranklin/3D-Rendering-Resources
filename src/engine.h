@@ -2,8 +2,9 @@
 #define GRAPHICS_ENGINE_H
 
 #include "shader/ShaderManager.h"
-#include "util/camera.h"
-#include "util/inputHandler.h"
+#include "util/camera.hpp"
+#include "util/cube.hpp"
+#include "util/inputHandler.hpp"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -21,22 +22,18 @@ class Engine {
 	float height = 1080;
 	unique_ptr<Camera> camera;
 	unique_ptr<InputHandler> input;
-	mat4 modelLeft;	 // Model matrix for a 3D object
+	mat4 model;		 // Model matrix for a 3D object
 	mat4 projection; // Orthographic projection matrix maps a 3D scene to a
 	mat4 view;		 // The camera's position and orientation in the world
-
-	// @note Call glCheckError() after every OpenGL call to check for errors.
-	//   GLenum glCheckError_(const char *file, int line);
-	//
-	// @brief Macro for glCheckError_ function. Used for debugging.
-	// #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
   public:
 	Engine();
 	~Engine();
 
 	unique_ptr<ShaderManager> shaderManager;
-	Shader shapeShader;
+	Shader defaultShader;
+    unique_ptr<Cube> cube;
+
 
 	const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
 								  static_cast<float>(height), -1.0f, 1.0f);

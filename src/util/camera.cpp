@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "camera.hpp"
 
 Camera::Camera(glm::vec3 Pos, glm::vec3 Up, float Yaw, float Pitch)
 	: pos(Pos), worldUp(Up), yaw(Yaw), pitch(Pitch),

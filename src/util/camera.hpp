@@ -33,17 +33,13 @@ class Camera {
 	float acceleration;
 	float fov;
 	float render_distance;
-
 	// Constructor
 	Camera(glm::vec3 Pos, glm::vec3 Up, float Yaw, float Pitch);
 	Camera();
-
 	// Get matrices
 	glm::mat4 GetViewMatrix();
 	glm::mat4 GetProjectionMatrix(float width, float height);
-
 	void move(glm::vec3 direction, bool lockY = false);
-
 	void ProcessMouseMovement(float xoffset, float yoffset,
 							  GLboolean constrainPitch = true);
 
