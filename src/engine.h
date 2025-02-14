@@ -49,8 +49,8 @@ class Engine {
 	void draw();
 	void update();
 	void render();
-	float deltaTime = 0.0f; // Time between current frame and last frame
-	float lastFrame = 0.0f; // Time of last frame (used to calculate deltaTime)
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
 	bool shouldClose();
 };
 

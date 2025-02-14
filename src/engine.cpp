@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+using glm::vec2;
 using std::endl, std::cout;
 
 Engine::Engine() {

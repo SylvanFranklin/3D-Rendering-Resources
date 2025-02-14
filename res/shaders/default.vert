@@ -1,19 +1,12 @@
 #version 330 core
-layout (location = 0) in vec3 aPos;
-
-out vec4 color; 
+layout(location = 0) in vec3 aPos;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+out vec3 pos;
 
 void main() {
-    gl_Position = projection * view * model * vec4(aPos, 1.0);
-
-    // Extract camera forward direction (negative Z axis of the view matrix)
-    vec3 forwardDir = normalize(vec3(-view[0][2], -view[1][2], -view[2][2]));
-
-    // Map direction to RGB (x → Red, y → Green, z → Blue)
-    color = vec4(0.5 + 0.5 * forwardDir, 1.0);
+    gl_Position = vec4(aPos, 1.0);
+    pos = aPos;
 }
-

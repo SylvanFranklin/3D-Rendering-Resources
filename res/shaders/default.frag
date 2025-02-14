@@ -1,10 +1,14 @@
 #version 330 core
 
 out vec4 FragColor;
-uniform vec3 triangleColor;
-in vec4 color;
+in vec3 pos;
+uniform vec2 mousePos;
+
+vec3 get_color(vec3 pos) {
+    vec3 center = vec3(mousePos, 0.0);
+    return abs(center - pos);
+}
 
 void main() {
-    FragColor = color * vec4(1.2, 1.0, 0.8, 1.0); // Slight color shift for variety
-} 
-
+    FragColor = vec4(get_color(pos), 1.0);
+}
