@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "shader/Shader.h"
 #include <iostream>
 #include <memory>
 
@@ -45,6 +46,7 @@ unsigned int Engine::initWindow(bool debug) {
 
 	glViewport(0, 0, mode->width, mode->height);
 	glEnable(GL_BLEND);
+	glDisable(GL_CULL_FACE); // Disable face culling
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glfwSwapInterval(1);
@@ -53,26 +55,21 @@ unsigned int Engine::initWindow(bool debug) {
 }
 
 void Engine::initShaders() {
-	// load shader manager
 	shaderManager = make_unique<ShaderManager>();
-
-	// Load shader into shader manager and retrieve it
 	defaultShader = this->shaderManager->loadShader(
-		"../res/shaders/default.vert", "../res/shaders/default.frag", nullptr,
-		"default");
-	// Set uniforms that never change
+		"../src/res/shaders/default.vert", "../src/res/shaders/default.frag",
+		nullptr, "default");
 	defaultShader.use();
-	defaultShader.setMatrix4("model", this->model);
 }
 void Engine::initShapes() { cube = make_unique<Cube>(); }
 void Engine::initMatrices() {
-	model = mat4(1.0f);
-	view = camera->GetViewMatrix();
-	projection = camera->GetProjectionMatrix(width, height);
+	model = mat4(0.3f);
+	view = mat4(1.0f);
+	projection = PROJECTION;
 }
 
 void Engine::update() {
-	glClearColor(255.0, 255.0, 255.0, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	float currentFrame = glfwGetTime();
 	view = camera->GetViewMatrix();
 	projection = camera->GetProjectionMatrix(width, height);

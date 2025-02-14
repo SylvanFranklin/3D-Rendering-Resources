@@ -6,4 +6,11 @@ void Engine::processInput() {
 	input->update_mouse(window);
 	if (input->key_pressed(GLFW_KEY_Q))
 		glfwSetWindowShouldClose(window, true);
+
+
+	if (input->key_pressed(GLFW_KEY_P))
+		model *= 1.2;
+
+	if (input->key_pressed(GLFW_KEY_M))
+		model *= 0.8;
 }

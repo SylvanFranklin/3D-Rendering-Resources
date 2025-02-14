@@ -1,5 +1,6 @@
 #ifndef CUBE_HPP
 #define CUBE_HPP
+#include "../shader/Shader.h"
 #include <glm/glm.hpp>
 #include <vector>
 using std::vector, glm::mat4;
@@ -11,12 +12,14 @@ class Cube {
 	~Cube();
 	void initVAO();
 	void initVBO();
+	void initEBO();
 	void draw() const;
 
   protected:
-	unsigned int VAO, VBO;
-	float vertices[24];
-	unsigned int indicies[36];
+	unsigned int VAO, VBO, EBO;
+	std::array<float, 24> vertices;
+	std::array<float, 36> indices;
+	mat4 model;
 };
 
 #endif // CUBE_HPP

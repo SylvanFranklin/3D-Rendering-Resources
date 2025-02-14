@@ -32,11 +32,9 @@ class Engine {
 
 	unique_ptr<ShaderManager> shaderManager;
 	Shader defaultShader;
-    unique_ptr<Cube> cube;
-
-
-	const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
-								  static_cast<float>(height), -1.0f, 1.0f);
+	unique_ptr<Cube> cube;
+	const mat4 PROJECTION = glm::perspective(
+		glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
 
 	unsigned int initWindow(bool debug = false);
 	void initShaders();
