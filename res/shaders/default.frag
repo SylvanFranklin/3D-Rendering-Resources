@@ -4,11 +4,12 @@ out vec4 FragColor;
 in vec3 pos;
 uniform vec2 mousePos;
 
-vec3 get_color(vec3 pos) {
-    vec3 center = vec3(mousePos, 0.0);
-    return abs(center - pos);
+vec3 norm_distance_from_center(vec3 pos) {
+    vec3 center = vec3(0.0);
+    vec3 dist = abs(center - pos);
+    return dist;
 }
 
 void main() {
-    FragColor = vec4(get_color(pos), 1.0);
+    FragColor = vec4(norm_distance_from_center(pos), 1.0);
 }
