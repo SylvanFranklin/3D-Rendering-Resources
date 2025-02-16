@@ -1,19 +1,19 @@
 #include "engine.h"
-#include "util/inputHandler.h"
 #include "util/scene.hpp"
 #include <iostream>
 #include <memory>
 
 using glm::vec2;
 using std::endl, std::cout;
+using namespace glm;
 
 Engine::Engine() {
 	this->camera = std::make_unique<Camera>();
-	this->input = std::make_unique<InputHandler>();
 	this->initWindow();
 	this->initMatrices();
 	this->initShaders();
 	this->initScene();
+	this->input = std::make_unique<InputHandler>(this->window);
 }
 
 unsigned int Engine::initWindow(bool debug) {
@@ -94,7 +94,13 @@ void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	view = camera->GetViewMatrix();
-	scene.setUniforms(modelLeft, view, projection);
+	// working with a box where we have vec2(1, -1, 1, 1)
+	vec2 mouse = vec2(-1 + (input->get_mouse_pos().x / width * 2),
+					  1 + (input->get_mouse_pos().y / height * -2));
+
+	scene.setUniforms(modelLeft, view, projection, mouse);
+
+	// cout << local_mouse.x << "," << local_mouse.y << endl;
 	defaultShader.use();
 	scene.draw();
 	glfwSwapBuffers(window);

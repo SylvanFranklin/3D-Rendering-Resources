@@ -1,4 +1,5 @@
 #include "inputHandler.hpp"
+#include <algorithm>
 
 InputHandler::InputHandler(GLFWwindow *window) { this->window = window; }
 
@@ -22,13 +23,11 @@ void InputHandler::update_mouse() {
 		this->firstMouse = false;
 	}
 	MouseXOffset = mouseX - lastMouseX;
-	MouseYOffset = lastMouseY - mouseY;
+	MouseYOffset = mouseY - lastMouseY;
 	lastMouseX = mouseX;
 	lastMouseY = mouseY;
 }
 
 glm::vec2 InputHandler::get_mouse_pos() {
-	double mouseX, mouseY;
-	glfwGetCursorPos(window, &mouseX, &mouseY);
-	return glm::vec2(mouseX, mouseY);
+	return glm::vec2(lastMouseX, lastMouseY);
 }

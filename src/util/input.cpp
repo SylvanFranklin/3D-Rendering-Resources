@@ -3,8 +3,8 @@
 void Engine::processInput() {
 	glfwPollEvents();
 	using glm::vec3;
-	input->update_keys(window);
-	input->update_mouse(window);
+	input->update_keys();
+	input->update_mouse();
 	if (input->key_pressed(GLFW_KEY_Q))
 		glfwSetWindowShouldClose(window, true);
 
@@ -22,6 +22,6 @@ void Engine::processInput() {
 	if (input->key_pressed(GLFW_KEY_LEFT_SHIFT))
 		direction += vec3(0.0f, -0.2f, 0.0f);
 
-	camera->ProcessMouseMovement(this->input->getMouseXOffset(),
-								 this->input->getMouseYOffset());
+	// camera->ProcessMouseMovement(input->MouseXOffset, input->MouseYOffset,
+	// 							 true);
 }

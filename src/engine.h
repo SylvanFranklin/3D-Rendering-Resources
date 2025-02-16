@@ -3,7 +3,7 @@
 
 #include "shader/ShaderManager.h"
 #include "util/camera.h"
-#include "util/inputHandler.h"
+#include "util/inputHandler.hpp"
 #include "util/scene.hpp"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
