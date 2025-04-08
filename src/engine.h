@@ -11,7 +11,8 @@
 #include <memory>
 #include <vector>
 
-using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho;
+using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho,
+	glm::vec3;
 
 class Engine {
   private:

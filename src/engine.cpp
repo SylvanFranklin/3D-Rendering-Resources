@@ -22,6 +22,7 @@ unsigned int Engine::initWindow(bool debug) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_SCALE_TO_MONITOR, true);
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -36,8 +37,12 @@ unsigned int Engine::initWindow(bool debug) {
 	this->width = mode->width;
 	this->height = mode->height;
 
+	cout << width << " " << height;
+
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
+	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	glfwSetWindowOpacity(window, 1.0f);
 	//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables
 	// the cursor
 
@@ -80,7 +85,7 @@ void Engine::initScene() {
 
 void Engine::initMatrices() {
 	view = camera->GetViewMatrix();
-	projection = camera->GetProjectionMatrix(width, height);
+	projection = camera->GetProjectionMatrix((float)width, (float)height);
 	modelLeft = mat4(1.0f);
 }
 
