@@ -33,13 +33,19 @@ void main() {
 
     vec3 color = vec3(15, 94, 156) / 255.0;
     float water_strength = 0.4;
+    float sand_strength = 0.5;
+    float forest_strength = 0.8;
     float tiers = 8;
 
-    if (valueNoise <= water_strength) {
+    if (valueNoise < water_strength) {
         color += vec3(floor(tiers * valueNoise / water_strength) / tiers);
+    } else if (valueNoise < sand_strength) {
+        color = vec3(255, 231, 135) / 255.0;
+    } else if (valueNoise < forest_strength) {
+        color = vec3(11, 110, 79) / 255.0;
     } else {
         color = vec3(1.0);
     }
 
-    FragColor = vec4(color + vec3(mouse, 1.0), 1.0);
+    FragColor = vec4(color, 1.0);
 }
