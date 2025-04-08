@@ -5,7 +5,7 @@ in vec3 pos;
 uniform vec2 mouse;
 
 float whitenoise(vec2 p) {
-    float random = dot(p, vec2(12.0, 78.0));
+    float random = dot(p + mouse.x, vec2(12.0, 78.0));
     random = sin(random);
     random = random * 43758.5453;
     random = fract(random);
@@ -15,7 +15,7 @@ float whitenoise(vec2 p) {
 void main() {
     vec2 uv = gl_FragCoord.xy;
     uv = uv / vec2(1512, 982);
-    uv = uv * 8.0;
+    uv = uv * 10.0;
     vec2 griduv = fract(uv);
     vec2 gridid = floor(uv);
 
@@ -32,20 +32,27 @@ void main() {
     float valueNoise = mix(b, t, griduv.y);
 
     vec3 color = vec3(15, 94, 156) / 255.0;
-    float water_strength = 0.4;
-    float sand_strength = 0.5;
+    float water_strength = 0.55;
+    float sand_strength = 0.65;
     float forest_strength = 0.8;
-    float tiers = 8;
+    float dirt_strength = 0.85;
+    float rock_strength = 0.95;
+    float tiers = 7;
 
     if (valueNoise < water_strength) {
-        color += vec3(floor(tiers * valueNoise / water_strength) / tiers);
+        color += vec3(floor(tiers * valueNoise / (water_strength+0.2)) / tiers);
     } else if (valueNoise < sand_strength) {
         color = vec3(255, 231, 135) / 255.0;
     } else if (valueNoise < forest_strength) {
         color = vec3(11, 110, 79) / 255.0;
+    } else if (valueNoise < dirt_strength) {
+        color = vec3(84, 61, 25) / 255.0;
+    } else if (valueNoise < rock_strength) {
+        color = vec3(65, 64, 64) / 255.0;
     } else {
         color = vec3(1.0);
     }
+
 
     FragColor = vec4(color, 1.0);
 }
