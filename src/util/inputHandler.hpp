@@ -9,7 +9,7 @@ class InputHandler {
   public:
 	InputHandler(GLFWwindow *window);
 	void update_mouse();
-	void update_keys();
+//	void update_keys();
 	bool key_pressed(int key) { return keys[key]; }
 	bool key_pressed_released(int key) { return !keys[key] && last_keys[key]; }
 	double MouseXOffset, MouseYOffset;

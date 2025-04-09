@@ -3,15 +3,15 @@
 
 InputHandler::InputHandler(GLFWwindow *window) { this->window = window; }
 
-void InputHandler::update_keys() {
-	std::copy(std::begin(keys), std::end(keys), std::begin(last_keys));
-	for (int key = 0; key < 1024; ++key) {
-		if (glfwGetKey(window, key) == GLFW_PRESS)
-			keys[key] = true;
-		else if (glfwGetKey(window, key) == GLFW_RELEASE)
-			keys[key] = false;
-	}
-};
+//void InputHandler::update_keys() {
+//	std::copy(std::begin(keys), std::end(keys), std::begin(last_keys));
+//	for (int key = 0; key < 1024; ++key) {
+//		if (glfwGetKey(window, key) == GLFW_PRESS)
+//			keys[key] = true;
+//		else if (glfwGetKey(window, key) == GLFW_RELEASE)
+//			keys[key] = false;
+//	}
+//}
 void InputHandler::update_mouse() {
 	double mouseX, mouseY;
 	glfwGetCursorPos(window, &mouseX, &mouseY);
