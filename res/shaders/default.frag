@@ -44,10 +44,12 @@ void main() {
     vec3 lightWater = vec3(0, 63, 178) / 255.0; // #003FB2
     vec3 deepWater = vec3(15, 81, 198) / 255.0; // #0F51C6
     vec3 lightSand = vec3(192, 181, 131) / 255.0; // #C0B583
-    vec3 darkSand = vec3(166, 150, 99) / 255.0; // #A69663
-    vec3 darkForest = vec3(58, 97, 19) / 255.0; // #3A6113
-    vec3 forest = vec3(61, 98, 22) / 255.0; // #3D6216
-    vec3 lightForest = vec3(121, 157, 81) / 255.0; // #799D51
+    vec3 mediumSand = vec3(166, 150, 99) / 255.0; // #A69663
+    vec3 darkSand = vec3(113, 98, 49) / 255.0; //
+    vec3 mediumForest = vec3(90, 127, 50) / 255.0; // #5A7F32
+    vec3 darkForest = vec3(60, 97, 20) / 255.0; // #3C6114
+    vec3 deepForest = vec3(40, 77, 0) / 255.0; // #284D00
+    vec3 lightForest = vec3(122, 158, 82) / 255.0; // #7A9E52
     vec3 darkRock = vec3(141, 140, 122) / 255.0; // #8D8C7A
     vec3 lightRock = vec3(160, 164, 145) / 255.0; // #A0A491
     vec3 snow = vec3(235, 235, 235) / 255.0; // #EBEBEB
@@ -60,26 +62,34 @@ void main() {
     float rock_strength = 0.95;
     vec2 uv = gl_FragCoord.xy;
 
-    float valueNoise = octive_noise(8.0) * 0.4;
-    valueNoise += octive_noise(16.0) * 0.3;
-    valueNoise += octive_noise(32.0) * 0.125;
-    valueNoise += octive_noise(64.0) * 0.0625;
+    float valueNoise = octive_noise(2.0) * 0.4;
+    for (int i = 2; i < 50; i++) {
+        valueNoise += octive_noise(2.0 * i * i) * (1.3 / (i * i));
+    }
 
     if (valueNoise < 0.35) {
         color = lightWater;
-    } else if (valueNoise < 0.4) {
+    } else if (valueNoise < 0.38) {
         color = deepWater;
-    } else if (valueNoise < 0.43) {
+    } else if (valueNoise < 0.40) {
         color = lightSand;
-    } else if (valueNoise < 0.5) {
+    } else if (valueNoise < 0.43) {
+        color = mediumSand;
+    } else if (valueNoise < 0.45) {
         color = darkSand;
-    } else if (valueNoise < 0.6) {
+    } else if (valueNoise < 0.47) {
+        color = mediumForest;
+    } else if (valueNoise < 0.53) {
         color = darkForest;
-    } else if (valueNoise < 0.68) {
+    } else if (valueNoise < 0.56) {
+        color = mediumForest;
+    } else if (valueNoise < 0.57) {
         color = lightForest;
-    } else if (valueNoise < 0.8) {
+    } else if (valueNoise < 0.59) {
+        color = lightForest;
+    } else if (valueNoise < 0.62) {
         color = darkRock;
-    } else if (valueNoise < 0.9) {
+    } else if (valueNoise < 0.66) {
         color = lightRock;
     } else {
         color = snow;
