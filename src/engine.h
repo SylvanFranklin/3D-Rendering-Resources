@@ -11,7 +11,7 @@
 #include <memory>
 #include <vector>
 
-using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho,
+using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho, glm::vec4,
 	glm::vec3;
 
 class Engine {
@@ -19,8 +19,8 @@ class Engine {
 	GLFWwindow *window{};
 	bool allowMove = true;
 	float time_since_last_move = 999.0;
-	float width = 1920;
-	float height = 1080;
+	int width;
+	int height;
 	unique_ptr<Camera> camera;
 	unique_ptr<InputHandler> input;
 	mat4 modelLeft;	 // Model matrix for a 3D object
@@ -52,6 +52,9 @@ class Engine {
 	void render();
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
+
+    vec4 influences = vec4(0.4,0.3,0.125,0.0625);
+
 	bool shouldClose();
 };
 

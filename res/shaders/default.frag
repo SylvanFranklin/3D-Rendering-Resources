@@ -4,6 +4,9 @@ out vec4 FragColor;
 in vec3 pos;
 uniform vec2 mouse;
 
+uniform vec4 influences;
+
+
 float whitenoise(vec2 p) {
     float random = dot(p, vec2(12.0, 78.0));
     random = sin(random);
@@ -60,10 +63,10 @@ void main() {
     float rock_strength = 0.95;
     vec2 uv = gl_FragCoord.xy;
 
-    float valueNoise = octive_noise(8.0) * 0.4;
-    valueNoise += octive_noise(16.0) * 0.3;
-    valueNoise += octive_noise(32.0) * 0.125;
-    valueNoise += octive_noise(64.0) * 0.0625;
+    float valueNoise = octive_noise(8.0) * influences[0];
+    valueNoise += octive_noise(16.0) * influences[1];
+    valueNoise += octive_noise(32.0) * influences[2];
+    valueNoise += octive_noise(64.0) * influences[3];
 
     if (valueNoise < 0.35) {
         color = lightWater;

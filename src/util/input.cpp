@@ -3,10 +3,10 @@
 void Engine::processInput() {
 	glfwPollEvents();
 	using glm::vec3;
-	input->update_keys();
+//	input->update_keys();
 	input->update_mouse();
-	if (input->key_pressed(GLFW_KEY_Q))
-		glfwSetWindowShouldClose(window, true);
+//	if (input->key_pressed(GLFW_KEY_Q))
+//		glfwSetWindowShouldClose(window, true);
 
 	vec3 direction = vec3(0.0);
 	if (input->key_pressed(GLFW_KEY_UP))
