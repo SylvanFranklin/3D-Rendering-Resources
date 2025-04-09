@@ -6,7 +6,6 @@ uniform vec2 mouse;
 
 uniform vec4 influences;
 
-
 float whitenoise(vec2 p) {
     float random = dot(p, vec2(12.0, 78.0));
     random = sin(random);
@@ -65,11 +64,12 @@ void main() {
     float rock_strength = 0.95;
     vec2 uv = gl_FragCoord.xy;
 
-    float valueNoise = octive_noise(2.0) * 0.4;
-    for (int i = 2; i < 50; i++) {
-        valueNoise += octive_noise(2.0 * i * i) * (1.3 / (i * i));
-    }
     float valueNoise = octive_noise(8.0) * influences[0];
+
+    for (int i = 2; i < 50; i++) {
+        valueNoise += octive_noise(influences[0] * i * i) * (1.3 / (i * i));
+    }
+
     valueNoise += octive_noise(16.0) * influences[1];
     valueNoise += octive_noise(32.0) * influences[2];
     valueNoise += octive_noise(64.0) * influences[3];
