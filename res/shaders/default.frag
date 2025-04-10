@@ -64,15 +64,11 @@ void main() {
     float rock_strength = 0.95;
     vec2 uv = gl_FragCoord.xy;
 
-    float valueNoise = octive_noise(8.0) * influences[0];
+    float valueNoise = octive_noise(8.0) * 0.4 * influences[0];
 
-    for (int i = 2; i < 50; i++) {
-        valueNoise += octive_noise(influences[0] * i * i) * (1.3 / (i * i));
+    for (int i = 4; i < floor(40 * influences[3]); i++) {
+        valueNoise += octive_noise(4.0 * influences[1] * i * i) * (1.2 / (i * i * influences[2]));
     }
-
-    valueNoise += octive_noise(16.0) * influences[1];
-    valueNoise += octive_noise(32.0) * influences[2];
-    valueNoise += octive_noise(64.0) * influences[3];
 
     if (valueNoise < 0.35) {
         color = lightWater;

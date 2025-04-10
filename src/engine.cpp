@@ -45,8 +45,8 @@ unsigned int Engine::initWindow(bool debug) {
 
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-//	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-//	glfwSetWindowOpacity(window, 1.0f);
+	//	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	//	glfwSetWindowOpacity(window, 1.0f);
 	//	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //disables
 	// the cursor
 
@@ -61,20 +61,16 @@ unsigned int Engine::initWindow(bool debug) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glfwSwapInterval(1);
 
-    // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	// Setup Dear ImGui context
+	ImGui::CreateContext();
+	ImGuiIO &io = ImGui::GetIO();
+	io.ConfigFlags |=
+		ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+	io.ConfigFlags |=
+		ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
 
-// Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-    ImGui_ImplOpenGL3_Init();
-
-
-
-
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init();
 	return 0;
 }
 
@@ -108,48 +104,25 @@ void Engine::initMatrices() {
 }
 
 void Engine::update() {
-    glfwPollEvents();
+	glfwPollEvents();
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+	ImGui::Begin("Dev Tools");
+	ImGuiIO &io = ImGui::GetIO();
+	float fps = io.Framerate;
+	ImGui::Text("Frame Rate: %.2f FPS", fps);
 
+	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Mountains");
+	ImGui::SliderFloat("8", &influences[0], 0.001f, 3.0f);
+	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
+	ImGui::SliderFloat("16", &influences[1], 0.001f, 1.0f);
+	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
+	ImGui::SliderFloat("32", &influences[2], 0.001f, 1.0f);
+	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
+	ImGui::SliderFloat("64", &influences[3], 0.001f, 1.0f);
 
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    ImGui::Begin("Dev Tools");
-
-    ImGuiIO& io = ImGui::GetIO();
-    float fps = io.Framerate;
-    ImGui::Text("Frame Rate: %.2f FPS", fps);
-
-    ImGui::TextColored(ImVec4(0.5,1,1,1),"Cosmetic");
-//    ImGui::SliderFloat("Particle Radius", &particleRadius, 1.0f, 50.0f);
-
-    ImGui::TextColored(ImVec4(0.5,1,1,1),"Gravity");
-//    ImGui::SliderFloat("Gravity", &gravityInteractable, 0.0f, 50.0f);
-//    ImGui::Checkbox("Invert Gravity", &inverseGravity);
-
-    ImGui::TextColored(ImVec4(0.5,1,1,1),"Interaction");
-
-//    const char* pullpushLabel = mousePull ? "Mode: Pull" : "Mode: Push";
-//    if (ImGui::Button(pullpushLabel)){
-//        mousePull = !mousePull;
-//    }
-//    ImGui::Checkbox("Allow Mouse Interact", &activateMouseInteract);
-//    ImGui::SliderFloat("Mouse Interact Radius", &mouseInteractRadius, 0.0f, 50.0f);
-
-
-    ImGui::TextColored(ImVec4(0.5,1,1,1),"Simulation Constants");
-    ImGui::SliderFloat("8", &influences[0], 0.001f, 1.0f);
-    ImGui::SliderFloat("16", &influences[1], 0.001f, 1.0f);
-    ImGui::SliderFloat("32", &influences[2], 0.001f, 1.0f);
-    ImGui::SliderFloat("64", &influences[3], 0.001f, 1.0f);
-
-
-    ImGui::End();
-
-
-
-
-
+	ImGui::End();
 
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
@@ -166,21 +139,21 @@ void Engine::render() {
 
 	scene.setUniforms(modelLeft, view, projection, mouse);
 
-    defaultShader.setVector4f("influences", influences);
+	defaultShader.setVector4f("influences", influences);
 
 	// cout << local_mouse.x << "," << local_mouse.y << endl;
 	defaultShader.use();
 	scene.draw();
 
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    glfwSwapBuffers(window);
+	glfwSwapBuffers(window);
 }
 
 bool Engine::shouldClose() { return glfwWindowShouldClose(window); }
 Engine::~Engine() {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }

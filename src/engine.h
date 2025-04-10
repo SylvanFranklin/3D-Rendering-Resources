@@ -5,14 +5,15 @@
 #include "util/camera.h"
 #include "util/inputHandler.hpp"
 #include "util/scene.hpp"
+#include "vendor/imgui/imgui.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <memory>
 #include <vector>
 
-using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho, glm::vec4,
-	glm::vec3;
+using std::vector, std::unique_ptr, std::make_unique, glm::mat4, glm::ortho,
+	glm::vec4, glm::vec3;
 
 class Engine {
   private:
@@ -21,6 +22,7 @@ class Engine {
 	float time_since_last_move = 999.0;
 	int width;
 	int height;
+	const char *save_filename = "/res/settings.txt";
 	unique_ptr<Camera> camera;
 	unique_ptr<InputHandler> input;
 	mat4 modelLeft;	 // Model matrix for a 3D object
@@ -39,8 +41,9 @@ class Engine {
 	unique_ptr<ShaderManager> shaderManager;
 	Scene scene;
 	Shader defaultShader;
-	const mat4 PROJECTION = ortho(0.0f, static_cast<float>(width), 0.0f,
-								  static_cast<float>(height), -1.0f, 1.0f);
+	const mat4 PROJECTION =
+		ortho(0.0f, static_cast<float>(this->width), 0.0f,
+			  static_cast<float>(this->height), -1.0f, 1.0f);
 
 	unsigned int initWindow(bool debug = false);
 	void initShaders();
@@ -53,7 +56,7 @@ class Engine {
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-    vec4 influences = vec4(0.4,0.3,0.125,0.0625);
+	vec4 influences = vec4(0.4, 0.3, 0.125, 0.0625);
 
 	bool shouldClose();
 };
