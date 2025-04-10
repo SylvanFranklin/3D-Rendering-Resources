@@ -1,11 +1,10 @@
 #include "engine.h"
 #include "util/scene.hpp"
-#include <iostream>
-#include <memory>
-
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
+#include <iostream>
+#include <memory>
 
 using glm::vec2;
 using std::endl, std::cout;
@@ -37,12 +36,8 @@ unsigned int Engine::initWindow(bool debug) {
 
 	GLFWmonitor *primaryMonitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode *mode = glfwGetVideoMode(primaryMonitor);
-
 	this->width = mode->width;
 	this->height = mode->height;
-
-	cout << width << " " << height;
-
 	window = glfwCreateWindow(width, height, "transmogVX", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	//	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
@@ -108,20 +103,28 @@ void Engine::update() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::Begin("Dev Tools");
+
+	ImGui::Begin("Dev Tools", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 8.0f));
+	ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.2f, 0.4f, 0.6f, 0.5f));
+
 	ImGuiIO &io = ImGui::GetIO();
 	float fps = io.Framerate;
+	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Performance");
+	ImGui::Separator();
 	ImGui::Text("Frame Rate: %.2f FPS", fps);
-
-	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Mountains");
-	ImGui::SliderFloat("8", &influences[0], 0.001f, 3.0f);
-	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
-	ImGui::SliderFloat("16", &influences[1], 0.001f, 1.0f);
-	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
-	ImGui::SliderFloat("32", &influences[2], 0.001f, 1.0f);
-	ImGui::TextColored(ImVec4(0.5, 1, 1, 1), "Placeholder");
-	ImGui::SliderFloat("64", &influences[3], 0.001f, 1.0f);
-
+	ImGui::Spacing();
+	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Terrain Parameters");
+	ImGui::Separator();
+	ImGui::SliderFloat("Frequency 8", &influences[0], 0.001f, 3.0f, "%.3f");
+	ImGui::SliderFloat("Frequency 16", &influences[1], 0.001f, 3.0f, "%.3f");
+	ImGui::SliderFloat("Frequency 32", &influences[2], 0.001f, 3.0f, "%.3f");
+	ImGui::SliderFloat("Frequency 64", &influences[3], 0.001f, 3.0f, "%.3f");
+	ImGui::Spacing();
+	ImGui::PopStyleColor();
+	ImGui::PopStyleVar(2);
 	ImGui::End();
 
 	float currentFrame = glfwGetTime();
@@ -141,7 +144,6 @@ void Engine::render() {
 
 	defaultShader.setVector4f("influences", influences);
 
-	// cout << local_mouse.x << "," << local_mouse.y << endl;
 	defaultShader.use();
 	scene.draw();
 

@@ -55,9 +55,7 @@ class Engine {
 	void render();
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
-
-	vec4 influences = vec4(0.4, 0.3, 0.125, 0.0625);
-
+	vec4 influences = vec4(1.2, 1.0, 1.0, 1.0);
 	bool shouldClose();
 };
 
