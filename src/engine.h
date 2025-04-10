@@ -20,8 +20,8 @@ class Engine {
 	GLFWwindow *window{};
 	bool allowMove = true;
 	float time_since_last_move = 999.0;
-	int width;
-	int height;
+	int width = 1920;
+	int height = 1080;
 	const char *save_filename = "/res/settings.txt";
 	unique_ptr<Camera> camera;
 	unique_ptr<InputHandler> input;
